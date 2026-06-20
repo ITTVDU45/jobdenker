@@ -1,36 +1,69 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
+  BarChart3,
+  Bot,
+  Brain,
+  Briefcase,
+  Building2,
   CalendarCheck,
   CheckCircle2,
+  ChevronDown,
+  CreditCard,
+  Database,
   FileText,
   Globe2,
   HeartHandshake,
+  Languages,
+  LineChart,
+  Megaphone,
   MessageCircle,
+  Phone,
+  Plug,
+  Rocket,
+  Search,
   ShieldCheck,
   Sparkles,
   Target,
   UsersRound,
+  Workflow,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { ButtonLink } from "@/components/ui/Button";
 import { MeshBlobs, MotionDiv, fadeLeft, fadeRight, fadeUp, stagger } from "@/components/ui/Motion";
 import { Section } from "@/components/ui/Section";
 import { cn } from "@/lib/utils";
 
 const cardIcons = {
+  barChart: BarChart3,
+  bot: Bot,
+  brain: Brain,
+  briefcase: Briefcase,
+  building: Building2,
   calendarCheck: CalendarCheck,
+  creditCard: CreditCard,
+  database: Database,
   fileText: FileText,
   globe2: Globe2,
+  handshake: HeartHandshake,
   heartHandshake: HeartHandshake,
+  languages: Languages,
+  lineChart: LineChart,
+  megaphone: Megaphone,
   messageCircle: MessageCircle,
+  phone: Phone,
+  plug: Plug,
+  rocket: Rocket,
+  search: Search,
   shieldCheck: ShieldCheck,
   sparkles: Sparkles,
   target: Target,
   usersRound: UsersRound,
+  workflow: Workflow,
   zap: Zap,
 } as const;
 
@@ -206,5 +239,157 @@ export function LinkGrid({ items }: { items: readonly (readonly [string, string]
         </MotionDiv>
       ))}
     </MotionDiv>
+  );
+}
+
+function FeatureMock({ iconName, title, lines }: { iconName: CardIconName; title: string; lines: string[] }) {
+  const Icon = cardIcons[iconName];
+  return (
+    <div className="relative mx-auto max-w-md">
+      <motion.div
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        className="rounded-2xl border border-brand-border bg-white p-5 shadow-xl shadow-brand-blue/10"
+      >
+        <div className="flex items-center justify-between border-b border-brand-border pb-4">
+          <div className="flex items-center gap-3">
+            <span className="bg-lime-gradient flex size-11 items-center justify-center rounded-xl text-brand-blue shadow-lg shadow-brand-green/20">
+              <Icon className="size-5" />
+            </span>
+            <p className="font-heading font-semibold text-brand-blue">{title}</p>
+          </div>
+          <span className="flex items-center gap-1.5 rounded-full bg-brand-green/10 px-3 py-1 text-xs font-semibold text-brand-greenDark">
+            <span className="size-2 rounded-full bg-brand-green" /> live
+          </span>
+        </div>
+        <div className="mt-4 grid gap-3">
+          {lines.map((line, index) => {
+            const width = 92 - index * 16;
+            return (
+              <div key={line} className="rounded-xl bg-brand-bgLight p-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-brand-blue">{line}</span>
+                  <span className="text-xs font-semibold text-brand-greenDark">{width}%</span>
+                </div>
+                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${width}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.2 + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                    className="bg-lime-gradient h-1.5 rounded-full"
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </motion.div>
+      <motion.div
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+        className="absolute -bottom-4 -right-3 flex items-center gap-2 rounded-xl bg-card px-4 py-2.5 text-sm font-semibold text-white shadow-xl"
+      >
+        <Sparkles className="size-4 text-brand-green" /> automatisiert
+      </motion.div>
+    </div>
+  );
+}
+
+export type AltSectionProps = {
+  reverse?: boolean;
+  light?: boolean;
+  eyebrow: string;
+  title: string;
+  text: string;
+  bullets: string[];
+  iconName: CardIconName;
+  mockTitle: string;
+  mockLines: string[];
+};
+
+export function AltSection({ reverse = false, light = true, eyebrow, title, text, bullets, iconName, mockTitle, mockLines }: AltSectionProps) {
+  return (
+    <section className={cn("px-4 py-16 md:px-8 md:py-24 lg:px-12", light ? "bg-white" : "bg-brand-bgLight")}>
+      <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-2 md:gap-14">
+        <MotionDiv
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={reverse ? fadeRight : fadeLeft}
+          className={cn("order-2", reverse ? "md:order-2" : "md:order-1")}
+        >
+          <FeatureMock iconName={iconName} title={mockTitle} lines={mockLines} />
+        </MotionDiv>
+
+        <MotionDiv
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={reverse ? fadeLeft : fadeRight}
+          className={cn("order-1", reverse ? "md:order-1" : "md:order-2")}
+        >
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-greenDark">{eyebrow}</p>
+          <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-balance md:text-4xl">{title}</h2>
+          <p className="mt-5 leading-8 text-brand-muted">{text}</p>
+          <div className="mt-6 grid gap-3">
+            {bullets.map((bullet) => (
+              <div key={bullet} className="flex items-start gap-3">
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-brand-green" />
+                <span className="font-semibold text-brand-blue">{bullet}</span>
+              </div>
+            ))}
+          </div>
+        </MotionDiv>
+      </div>
+    </section>
+  );
+}
+
+export function FAQSection({
+  items,
+  title = "Häufige Fragen",
+  subtitle = "Was Teams vor dem Start am häufigsten wissen wollen.",
+  light = true,
+}: {
+  items: readonly { question: string; answer: string }[];
+  title?: string;
+  subtitle?: string;
+  light?: boolean;
+}) {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  return (
+    <Section className={light ? "bg-white" : "bg-brand-bgLight"} title={title} subtitle={subtitle}>
+      <div className="mx-auto max-w-3xl divide-y divide-brand-border overflow-hidden rounded-2xl border border-brand-border bg-white">
+        {items.map((item, index) => {
+          const isOpen = openIndex === index;
+          return (
+            <div key={item.question}>
+              <button
+                onClick={() => setOpenIndex(isOpen ? null : index)}
+                className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition hover:bg-brand-bgLight md:px-6"
+                aria-expanded={isOpen}
+              >
+                <span className="font-heading font-semibold text-brand-blue">{item.question}</span>
+                <ChevronDown className={cn("size-5 shrink-0 text-brand-muted transition", isOpen && "rotate-180 text-brand-greenDark")} />
+              </button>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <p className="px-5 pb-5 leading-7 text-brand-muted md:px-6">{item.answer}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
+    </Section>
   );
 }
