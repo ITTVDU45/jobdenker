@@ -50,23 +50,43 @@ export function ChatWidget() {
   const [showTeaser, setShowTeaser] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const nextId = useRef(1);
+  const autoOpened = useRef(false);
+  const proactiveSent = useRef(false);
 
-  // Beim ersten Seitenaufruf automatisch aufploppen (einmal pro Session)
+  // Beim Seitenaufruf automatisch aufploppen – nur stumm, wenn aktiv geschlossen
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const seen = sessionStorage.getItem("jd-chat-opened");
-    if (seen) return;
+    const dismissed = sessionStorage.getItem("jd-chat-dismissed");
     const timer = window.setTimeout(() => {
-      setShowTeaser(true);
-      const openTimer = window.setTimeout(() => {
+      if (dismissed) {
+        setShowTeaser(true);
+      } else {
+        autoOpened.current = true;
         setOpen(true);
-        setShowTeaser(false);
-        sessionStorage.setItem("jd-chat-opened", "1");
-      }, 1600);
-      return () => window.clearTimeout(openTimer);
-    }, 1200);
+      }
+    }, 1500);
     return () => window.clearTimeout(timer);
   }, []);
+
+  // Proaktive Nachricht, sobald automatisch geöffnet wurde
+  useEffect(() => {
+    if (!open || !autoOpened.current || proactiveSent.current) return;
+    proactiveSent.current = true;
+    setTyping(true);
+    const timer = window.setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: nextId.current++,
+          role: "bot",
+          text: "Möchtest du Jobdenker in 30 Minuten live sehen? Ich zeige dir gern Matching, CV-Generator und Automatisierung.",
+          link: { href: "/demo", label: "Demo buchen" },
+        },
+      ]);
+      setTyping(false);
+    }, 1500);
+    return () => window.clearTimeout(timer);
+  }, [open]);
 
   // Automatisch nach unten scrollen
   useEffect(() => {
@@ -89,7 +109,13 @@ export function ChatWidget() {
   function openChat() {
     setOpen(true);
     setShowTeaser(false);
-    sessionStorage.setItem("jd-chat-opened", "1");
+    sessionStorage.removeItem("jd-chat-dismissed");
+  }
+
+  function closeChat() {
+    setOpen(false);
+    sessionStorage.setItem("jd-chat-dismissed", "1");
+    setShowTeaser(true);
   }
 
   return (
@@ -117,7 +143,7 @@ export function ChatWidget() {
                   <span className="size-2 rounded-full bg-brand-green" /> Normalerweise in Minuten zurück
                 </p>
               </div>
-              <button onClick={() => setOpen(false)} aria-label="Chat schließen" className="rounded-lg p-1.5 text-slate-300 transition hover:bg-white/10 hover:text-white">
+              <button onClick={closeChat} aria-label="Chat schließen" className="rounded-lg p-1.5 text-slate-300 transition hover:bg-white/10 hover:text-white">
                 <X className="size-5" />
               </button>
             </div>
@@ -162,8 +188,8 @@ export function ChatWidget() {
                 </div>
               )}
 
-              {/* Schnellantworten nur am Anfang */}
-              {messages.length === 1 && !typing && (
+              {/* Schnellantworten, solange noch keine eigene Nachricht */}
+              {!messages.some((m) => m.role === "user") && !typing && (
                 <div className="flex flex-wrap gap-2 pt-1">
                   {quickReplies.map((q) => (
                     <button
@@ -214,21 +240,24 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             onClick={openChat}
-            className="mb-3 max-w-[240px] rounded-2xl rounded-br-md border border-brand-border bg-white px-4 py-3 text-left text-sm font-medium text-brand-blue shadow-xl"
+            className="mb-3 max-w-[250px] rounded-2xl rounded-br-md border border-brand-border bg-white px-4 py-3 text-left text-sm font-medium text-brand-blue shadow-xl"
           >
-            👋 Fragen zu Jobdenker? Schreib uns einfach!
+            👋 Hi! Brauchst du Hilfe beim Recruiting? Frag mich einfach.
           </motion.button>
         )}
       </AnimatePresence>
 
       {/* Floating Button */}
       <motion.button
-        onClick={() => (open ? setOpen(false) : openChat())}
+        onClick={() => (open ? closeChat() : openChat())}
         whileTap={{ scale: 0.92 }}
         aria-label={open ? "Chat schließen" : "Chat öffnen"}
         className="bg-lime-gradient relative flex size-14 items-center justify-center rounded-full text-brand-blue shadow-xl shadow-brand-green/30 transition hover:scale-105"
       >
         {!open && <span className="absolute inset-0 -z-10 rounded-full bg-brand-green/40 [animation:ping-ring_2.6s_ease-out_infinite]" />}
+        {!open && showTeaser && (
+          <span className="absolute -right-0.5 -top-0.5 flex size-5 items-center justify-center rounded-full bg-brand-blue text-[11px] font-bold text-white shadow-md">1</span>
+        )}
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
             <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
