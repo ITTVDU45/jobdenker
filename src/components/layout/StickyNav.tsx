@@ -54,7 +54,7 @@ export function StickyNav() {
             Demo buchen
           </Link>
         </div>
-        <button className="lg:hidden" aria-label="Menü öffnen" onClick={() => setMobileOpen(true)}>
+        <button className="-mr-2 rounded-lg p-2 transition hover:bg-current/10 lg:hidden" aria-label="Menü öffnen" onClick={() => setMobileOpen(true)}>
           <Menu />
         </button>
       </nav>
