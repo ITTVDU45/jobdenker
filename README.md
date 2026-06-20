@@ -1,4 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jobdenker Website
+
+Professionelle Marketing-Website für Jobdenker, eine KI-gestützte Recruiting- und Personalvermittlungsplattform.
+
+## Stack
+
+- Next.js App Router, React, TypeScript
+- Tailwind CSS v4
+- Framer Motion
+- Lucide React
+- React Hook Form + Zod
+- `next-sitemap`
+
+## Entwicklung
+
+```bash
+npm run dev
+```
+
+Öffne danach `http://localhost:3000`.
+
+## Spätere Integrationen
+
+Die Website ist als Marketing-Frontend umgesetzt. Für spätere Produktfunktionen sind Umgebungsvariablen in `.env.example` vorbereitet:
+
+- `MONGODB_URI` für persistente Daten
+- `MINIO_*` für dokumentenbasierten Object Storage
+
+Die Datei `src/lib/future-integrations.ts` bündelt die künftigen Konfigurationspunkte.
 
 ## Getting Started
 

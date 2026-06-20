@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Visa status tracking illustration</title>
+  <desc id="desc">A recruiting status board with documents, checkpoints, and progress indicators.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f4fbf8"/>
+      <stop offset="1" stop-color="#eaffbd"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f7fff9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <circle cx="185" cy="170" r="170" fill="#a3e635" opacity=".32"/>
+  <circle cx="1040" cy="610" r="230" fill="#12324a" opacity=".08"/>
+  <rect x="210" y="110" width="780" height="540" rx="54" fill="url(#panel)" stroke="#d7e9e2" stroke-width="6"/>
+  <rect x="280" y="180" width="270" height="360" rx="28" fill="#12324a"/>
+  <rect x="324" y="234" width="182" height="28" rx="14" fill="#a3e635"/>
+  <rect x="324" y="300" width="150" height="20" rx="10" fill="#fff" opacity=".26"/>
+  <rect x="324" y="344" width="170" height="20" rx="10" fill="#fff" opacity=".26"/>
+  <rect x="324" y="388" width="126" height="20" rx="10" fill="#fff" opacity=".26"/>
+  <g fill="none" stroke="#12324a" stroke-width="10" stroke-linecap="round">
+    <path d="M650 214h190"/>
+    <path d="M650 330h220"/>
+    <path d="M650 446h160"/>
+  </g>
+  <g>
+    <circle cx="610" cy="214" r="22" fill="#a3e635"/>
+    <circle cx="610" cy="330" r="22" fill="#a3e635"/>
+    <circle cx="610" cy="446" r="22" fill="#a3e635"/>
+    <path d="M603 214l7 7 15-17M603 330l7 7 15-17M603 446l7 7 15-17" fill="none" stroke="#12324a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M610 236v72M610 352v72" stroke="#d7e9e2" stroke-width="8" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://jobdenker.de
+
+# Sitemaps
+Sitemap: https://jobdenker.de/sitemap.xml

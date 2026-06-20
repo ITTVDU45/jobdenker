@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait Martin Scholz</title>
+  <desc id="desc">Stilisiert dargestelltes Portrait eines Recruiting-Leiters.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4fbf8"/>
+      <stop offset="1" stop-color="#ddf7f0"/>
+    </linearGradient>
+    <linearGradient id="jacket" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#12324a"/>
+      <stop offset="1" stop-color="#0c2435"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="420" rx="36" fill="url(#bg)"/>
+  <circle cx="120" cy="82" r="118" fill="#a3e635" opacity=".26"/>
+  <circle cx="520" cy="340" r="154" fill="#12324a" opacity=".08"/>
+  <rect x="96" y="54" width="448" height="308" rx="38" fill="#fff" opacity=".72"/>
+  <path d="M162 356c24-84 83-132 158-132s134 48 158 132H162Z" fill="url(#jacket)"/>
+  <circle cx="320" cy="168" r="74" fill="#d19a78"/>
+  <path d="M244 151c8-66 52-105 101-96 48 9 75 47 62 105-44-21-91-24-163-9Z" fill="#6b4a38"/>
+  <rect x="247" y="165" width="43" height="22" rx="11" fill="none" stroke="#12324a" stroke-width="8"/>
+  <rect x="350" y="165" width="43" height="22" rx="11" fill="none" stroke="#12324a" stroke-width="8"/>
+  <path d="M290 176h60" stroke="#12324a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M296 205c14 11 34 11 48 0" fill="none" stroke="#7a3f32" stroke-width="8" stroke-linecap="round"/>
+  <path d="M250 287h140l-70 52-70-52Z" fill="#fff"/>
+  <path d="M272 310l48 39 48-39" fill="none" stroke="#a3e635" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

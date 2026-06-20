@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Integration workflow illustration</title>
+  <desc id="desc">A connected recruiting platform workflow with integrations and data streams.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#efffd2"/>
+      <stop offset="1" stop-color="#f7fffb"/>
+    </linearGradient>
+    <linearGradient id="dark" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#12324a"/>
+      <stop offset="1" stop-color="#1b5a54"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="760" fill="url(#bg)"/>
+  <circle cx="980" cy="120" r="180" fill="#a3e635" opacity=".32"/>
+  <circle cx="155" cy="645" r="220" fill="#12324a" opacity=".08"/>
+  <rect x="330" y="188" width="540" height="384" rx="48" fill="url(#dark)"/>
+  <rect x="390" y="250" width="420" height="54" rx="18" fill="#fff" opacity=".16"/>
+  <rect x="390" y="334" width="260" height="34" rx="17" fill="#a3e635"/>
+  <rect x="390" y="398" width="340" height="34" rx="17" fill="#fff" opacity=".18"/>
+  <rect x="390" y="462" width="300" height="34" rx="17" fill="#fff" opacity=".18"/>
+  <g fill="#fff" stroke="#d7e9e2" stroke-width="4">
+    <rect x="105" y="140" width="190" height="130" rx="30"/>
+    <rect x="905" y="140" width="190" height="130" rx="30"/>
+    <rect x="105" y="490" width="190" height="130" rx="30"/>
+    <rect x="905" y="490" width="190" height="130" rx="30"/>
+  </g>
+  <g fill="none" stroke="#a3e635" stroke-width="14" stroke-linecap="round">
+    <path d="M295 205C380 205 420 278 330 342"/>
+    <path d="M905 205C820 205 780 278 870 342"/>
+    <path d="M295 555C380 555 420 482 330 418"/>
+    <path d="M905 555C820 555 780 482 870 418"/>
+  </g>
+  <g fill="#12324a" font-family="Arial, sans-serif" font-weight="700" font-size="34">
+    <text x="166" y="217">API</text>
+    <text x="956" y="217">CRM</text>
+    <text x="158" y="568">ADS</text>
+    <text x="950" y="568">DOC</text>
+  </g>
+</svg>
