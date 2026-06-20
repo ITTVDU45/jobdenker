@@ -1,5 +1,5 @@
 // Jobdenker Service Worker
-const CACHE = "jobdenker-v1";
+const CACHE = "jobdenker-v2";
 const PRECACHE = ["/offline.html", "/manifest.json", "/logo/jobdenker-logo-white.png"];
 
 self.addEventListener("install", (event) => {

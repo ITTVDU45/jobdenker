@@ -25,7 +25,16 @@ export function StickyNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Hintergrund-Scroll sperren, solange das mobile Menü offen ist
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   return (
+    <>
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition duration-300",
@@ -78,33 +87,35 @@ export function StickyNav() {
           </motion.div>
         )}
       </AnimatePresence>
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-slate-950/40 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)}>
-            <motion.aside
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 26, stiffness: 260 }}
-              className="ml-auto flex h-full w-[86%] max-w-sm flex-col bg-white p-6 text-slate-900 shadow-2xl"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className="mb-8 flex items-center justify-between">
-                <Image src="/logo/jobdenker-logo-color.png" alt="Jobdenker" width={140} height={37} className="h-8 w-auto" />
-                <button aria-label="Menü schließen" onClick={() => setMobileOpen(false)}>
-                  <X />
-                </button>
-              </div>
-              <MobileGroup title="Lösungen" items={navSolutions} />
-              <MobileGroup title="Portale" items={navPortals} />
-              <Link href="/preise" className="border-t border-brand-border py-4 font-semibold">Preise</Link>
-              <Link href="/blog" className="border-t border-brand-border py-4 font-semibold">News & Ratgeber</Link>
-              <Link href="/demo" className="mt-6 rounded-xl bg-lime-gradient px-5 py-3 text-center font-semibold text-white shadow-lg shadow-brand-green/25">Demo buchen</Link>
-            </motion.aside>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
+
+    <AnimatePresence>
+      {mobileOpen && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[70] bg-slate-950/60 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)}>
+          <motion.aside
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 26, stiffness: 260 }}
+            className="ml-auto flex h-full w-[86%] max-w-sm flex-col overflow-y-auto bg-white p-6 text-slate-900 shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-8 flex items-center justify-between">
+              <Image src="/logo/jobdenker-logo-color.png" alt="Jobdenker" width={140} height={37} className="h-8 w-auto" />
+              <button aria-label="Menü schließen" onClick={() => setMobileOpen(false)} className="-mr-2 rounded-lg p-2 text-slate-700 transition hover:bg-slate-100">
+                <X />
+              </button>
+            </div>
+            <MobileGroup title="Lösungen" items={navSolutions} onNavigate={() => setMobileOpen(false)} />
+            <MobileGroup title="Portale" items={navPortals} onNavigate={() => setMobileOpen(false)} />
+            <Link href="/preise" className="border-t border-brand-border py-4 font-semibold" onClick={() => setMobileOpen(false)}>Preise</Link>
+            <Link href="/blog" className="border-t border-brand-border py-4 font-semibold" onClick={() => setMobileOpen(false)}>News & Ratgeber</Link>
+            <Link href="/demo" className="mt-6 rounded-xl bg-lime-gradient px-5 py-3 text-center font-semibold text-white shadow-lg shadow-brand-green/25" onClick={() => setMobileOpen(false)}>Demo buchen</Link>
+          </motion.aside>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
 
@@ -133,12 +144,12 @@ function DropdownButton({
   );
 }
 
-function MobileGroup({ title, items }: { title: string; items: readonly (readonly [string, string])[] }) {
+function MobileGroup({ title, items, onNavigate }: { title: string; items: readonly (readonly [string, string])[]; onNavigate?: () => void }) {
   return (
     <div className="mb-4">
       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-muted">{title}</p>
       {items.map(([label, href]) => (
-        <Link key={href} href={href} className="block rounded-lg py-2 font-semibold hover:text-brand-greenDark">
+        <Link key={href} href={href} onClick={onNavigate} className="block rounded-lg py-2 font-semibold hover:text-brand-greenDark">
           {label}
         </Link>
       ))}

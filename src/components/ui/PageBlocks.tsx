@@ -310,7 +310,7 @@ export type AltSectionProps = {
 
 export function AltSection({ reverse = false, light = true, eyebrow, title, text, bullets, iconName, mockTitle, mockLines }: AltSectionProps) {
   return (
-    <section className={cn("px-4 py-16 md:px-8 md:py-24 lg:px-12", light ? "bg-white" : "bg-brand-bgLight")}>
+    <section className={cn("overflow-hidden px-4 py-16 md:px-8 md:py-24 lg:px-12", light ? "bg-white" : "bg-brand-bgLight")}>
       <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-2 md:gap-14">
         <MotionDiv
           initial="hidden"

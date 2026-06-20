@@ -50,43 +50,14 @@ export function ChatWidget() {
   const [showTeaser, setShowTeaser] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const nextId = useRef(1);
-  const autoOpened = useRef(false);
-  const proactiveSent = useRef(false);
 
-  // Beim Seitenaufruf automatisch aufploppen – nur stumm, wenn aktiv geschlossen
+  // Beim Seitenaufruf eine kompakte Nachricht einblenden – nur stumm, wenn aktiv geschlossen
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const dismissed = sessionStorage.getItem("jd-chat-dismissed");
-    const timer = window.setTimeout(() => {
-      if (dismissed) {
-        setShowTeaser(true);
-      } else {
-        autoOpened.current = true;
-        setOpen(true);
-      }
-    }, 1500);
+    if (sessionStorage.getItem("jd-chat-dismissed")) return;
+    const timer = window.setTimeout(() => setShowTeaser(true), 1500);
     return () => window.clearTimeout(timer);
   }, []);
-
-  // Proaktive Nachricht, sobald automatisch geöffnet wurde
-  useEffect(() => {
-    if (!open || !autoOpened.current || proactiveSent.current) return;
-    proactiveSent.current = true;
-    setTyping(true);
-    const timer = window.setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: nextId.current++,
-          role: "bot",
-          text: "Möchtest du Jobdenker in 30 Minuten live sehen? Ich zeige dir gern Matching, CV-Generator und Automatisierung.",
-          link: { href: "/demo", label: "Demo buchen" },
-        },
-      ]);
-      setTyping(false);
-    }, 1500);
-    return () => window.clearTimeout(timer);
-  }, [open]);
 
   // Automatisch nach unten scrollen
   useEffect(() => {
@@ -114,8 +85,13 @@ export function ChatWidget() {
 
   function closeChat() {
     setOpen(false);
+    setShowTeaser(false);
     sessionStorage.setItem("jd-chat-dismissed", "1");
-    setShowTeaser(true);
+  }
+
+  function dismissTeaser() {
+    setShowTeaser(false);
+    sessionStorage.setItem("jd-chat-dismissed", "1");
   }
 
   return (
@@ -232,18 +208,32 @@ export function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Teaser-Bubble */}
+      {/* Teaser-Nachricht mit Schließen */}
       <AnimatePresence>
         {showTeaser && !open && (
-          <motion.button
+          <motion.div
             initial={{ opacity: 0, y: 10, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            onClick={openChat}
-            className="mb-3 max-w-[250px] rounded-2xl rounded-br-md border border-brand-border bg-white px-4 py-3 text-left text-sm font-medium text-brand-blue shadow-xl"
+            className="relative mb-3 max-w-[260px]"
           >
-            👋 Hi! Brauchst du Hilfe beim Recruiting? Frag mich einfach.
-          </motion.button>
+            <button
+              onClick={dismissTeaser}
+              aria-label="Nachricht schließen"
+              className="absolute -right-2 -top-2 z-10 flex size-6 items-center justify-center rounded-full border border-brand-border bg-white text-brand-muted shadow-md transition hover:text-brand-blue"
+            >
+              <X className="size-3.5" />
+            </button>
+            <button onClick={openChat} className="block w-full rounded-2xl rounded-br-md border border-brand-border bg-white px-4 py-3 text-left shadow-xl">
+              <span className="mb-1.5 flex items-center gap-2 text-xs font-semibold text-brand-greenDark">
+                <span className="bg-lime-gradient flex size-5 items-center justify-center rounded-full">
+                  <Sparkles className="size-3 text-brand-blue" />
+                </span>
+                Jobdenker-Assistent
+              </span>
+              <span className="block text-sm font-medium leading-snug text-brand-blue">👋 Hi! Brauchst du Hilfe beim Recruiting? Frag mich einfach.</span>
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
 
