@@ -26,17 +26,6 @@ export function HeroSection() {
       />
 
       <MeshBlobs />
-      {/* feines Raster für Tiefe */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
-          maskImage: "radial-gradient(circle at 50% 35%, black, transparent 75%)",
-        }}
-        aria-hidden
-      />
 
       <MotionDiv initial="hidden" animate="visible" variants={stagger} className="relative mx-auto max-w-7xl text-center">
         <MotionDiv
