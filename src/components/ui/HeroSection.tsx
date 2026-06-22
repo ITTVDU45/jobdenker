@@ -8,6 +8,23 @@ import { AnimatedCounter, MeshBlobs, MotionDiv, fadeUp, stagger } from "@/compon
 export function HeroSection() {
   return (
     <section className="bg-mesh relative overflow-hidden px-4 pb-20 pt-32 text-white md:px-8 md:pb-28 md:pt-40 lg:px-12">
+      {/* Hintergrundvideo */}
+      <video
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden
+      >
+        <source src="/videos/video.mp4" type="video/mp4" />
+      </video>
+      {/* leichtes Overlay für Lesbarkeit (Markenfarbe #12324a) */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-brand-dark/80 via-brand-dark/60 to-brand-dark/85"
+        aria-hidden
+      />
+
       <MeshBlobs />
       {/* feines Raster für Tiefe */}
       <div
